@@ -1,22 +1,23 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const { HttpCodes } = require('../helpers/constants');
-
-const { JWT_SECRET_KEY } = process.env;
+const TokenService = require('../services/jwt-token-service');
+const ApiError = require('../exceptions/api-errors');
+const { HttpCodes, responseMessages } = require('../helpers/constants');
 
 const isAuthenticated = (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
-      throw new Error('JWT token is not provided.');
+      throw new ApiError({
+        status: HttpCodes.UNAUTHORIZED,
+        message: responseMessages.noJWT,
+      });
     }
 
-    jwt.verify(token, JWT_SECRET_KEY);
+    TokenService.verifyToken(token);
 
     next();
   } catch (error) {
-    return res.status(HttpCodes.UNAUTHORIZED).json({ message: error.message });
+    next(error);
   }
 };
 
