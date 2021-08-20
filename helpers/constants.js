@@ -15,19 +15,16 @@ const Ports = {
   default: 3000,
 };
 
-const validationConfig = {
-  minNameLength: 2,
-  maxNameLength: 30,
-  minPasswordLength: 8,
-  minDomainSegments: 2,
-};
-
-const responseMessages = {
+const Messages = {
   loginSuccess: 'You have successfully logged in.',
   registrationSuccess: 'You have successfully registered.',
   emailConflict: 'This email is already in use.',
   invalidCreds: 'Invalid credentials.',
   noJWT: 'JWT token is not provided.',
+  tooManyRequests: 'Too many requrests made. Please try again later.',
+  notFound: 'Not found.',
+  welcomeHome:
+    'Welcome! Please visit /user/create endpoint to register or /user/login to login. Once logged in you can visit /btcRate to learn what current bitcoin rate is.',
 };
 
-module.exports = { HttpCodes, Ports, validationConfig, responseMessages };
+module.exports = { HttpCodes, Ports, Messages };
