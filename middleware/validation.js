@@ -1,5 +1,6 @@
 const Joi = require('joi');
-const { HttpCodes, validationConfig } = require('../helpers/constants');
+const { HttpCodes } = require('../helpers/constants');
+const { validationConfig } = require('../configs/validation-config');
 
 const schemaRegisterUser = Joi.object({
   name: Joi.string()
