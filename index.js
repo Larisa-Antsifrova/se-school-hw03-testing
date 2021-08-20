@@ -5,7 +5,7 @@ const rateLimit = require('express-rate-limit');
 
 const { apiLimiterConfig } = require('./helpers/api-limiter-config');
 const homeRouter = require('./routes/home-route');
-const usersRouter = require('./routes/users-routes');
+const userRouter = require('./routes/users-routes');
 const btcRouter = require('./routes/btc-routes');
 const { Ports, HttpCodes } = require('./helpers/constants');
 
@@ -20,7 +20,7 @@ const apiLimiter = rateLimit(apiLimiterConfig);
 app.use(apiLimiter);
 
 app.use(homeRouter);
-app.use(usersRouter);
+app.use(userRouter);
 app.use(btcRouter);
 
 app.use((req, res) => {
