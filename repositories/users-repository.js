@@ -42,7 +42,7 @@ class Users {
       const allUsers = await this.mapper.read();
       allUsers.push(newUser);
 
-      await this.mapper.write(newUser);
+      await this.mapper.write(allUsers);
 
       return { id, name, email };
     } catch (error) {
