@@ -1,6 +1,6 @@
 const TokenService = require('../services/jwt-token-service');
 const ApiError = require('../exceptions/api-errors');
-const { HttpCodes, responseMessages } = require('../helpers/constants');
+const { HttpCodes, Messages } = require('../helpers/constants');
 
 const isAuthenticated = (req, res, next) => {
   try {
@@ -9,7 +9,7 @@ const isAuthenticated = (req, res, next) => {
     if (!token) {
       throw new ApiError({
         status: HttpCodes.UNAUTHORIZED,
-        message: responseMessages.noJWT,
+        message: Messages.noJWT,
       });
     }
 

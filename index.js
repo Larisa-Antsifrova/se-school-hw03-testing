@@ -3,28 +3,28 @@ const express = require('express');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
-const { apiLimiterConfig } = require('./helpers/api-limiter-config');
 const homeRouter = require('./routes/home-route');
 const userRouter = require('./routes/users-routes');
 const btcRouter = require('./routes/btc-routes');
-const { Ports, HttpCodes } = require('./helpers/constants');
+
+const { ApiLimiterConfig } = require('./configs/api-limiter-config');
+const { Limits } = require('./configs/limits-config');
+const { Ports, HttpCodes, Messages } = require('./helpers/constants');
 
 const PORT = process.env.PORT || Ports.default;
 
 const app = express();
+
 app.use(helmet());
-
-app.use(express.json());
-
-const apiLimiter = rateLimit(apiLimiterConfig);
-app.use(apiLimiter);
+app.use(express.json({ limit: Limits.JSON }));
+app.use(rateLimit(ApiLimiterConfig));
 
 app.use(homeRouter);
 app.use(userRouter);
 app.use(btcRouter);
 
 app.use((req, res) => {
-  return res.status(HttpCodes.NOT_FOUND).json({ message: 'Not found' });
+  return res.status(HttpCodes.NOT_FOUND).json({ message: Messages.notFound });
 });
 
 app.use((err, req, res, next) => {
@@ -42,3 +42,5 @@ process.on('unhandledRejection', (reason, promise) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports = app;
