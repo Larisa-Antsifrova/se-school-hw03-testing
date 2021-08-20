@@ -19,10 +19,10 @@ class Users {
     }
   }
 
-  async getOneUserBy(field) {
+  async getOneUserBy(field, value) {
     try {
       const allUsers = await this.mapper.read();
-      return allUsers.find(user => user[field] === field);
+      return allUsers.find(user => user[field] === value);
     } catch (error) {
       console.log('Error in getOneUserBy: ', error.message);
     }
