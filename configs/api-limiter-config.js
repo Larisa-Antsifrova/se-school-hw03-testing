@@ -1,6 +1,6 @@
 const { HttpCodes, Messages } = require('../helpers/constants');
 
-const apiLimiterConfig = {
+const ApiLimiterConfig = {
   windowMs: 900000, // period of 15 minutes
   max: 100,
   handler: (req, res, next) => {
@@ -10,4 +10,4 @@ const apiLimiterConfig = {
   },
 };
 
-module.exports = { apiLimiterConfig };
+module.exports = { ApiLimiterConfig };
