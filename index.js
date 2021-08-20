@@ -3,11 +3,11 @@ const express = require('express');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
-const { apiLimiterConfig } = require('./helpers/api-limiter-config');
+const { apiLimiterConfig } = require('./configs/api-limiter-config');
 const homeRouter = require('./routes/home-route');
 const userRouter = require('./routes/users-routes');
 const btcRouter = require('./routes/btc-routes');
-const { Ports, HttpCodes } = require('./helpers/constants');
+const { Ports, HttpCodes, Messages } = require('./helpers/constants');
 
 const PORT = process.env.PORT || Ports.default;
 
@@ -24,7 +24,7 @@ app.use(userRouter);
 app.use(btcRouter);
 
 app.use((req, res) => {
-  return res.status(HttpCodes.NOT_FOUND).json({ message: 'Not found' });
+  return res.status(HttpCodes.NOT_FOUND).json({ message: Messages.notFound });
 });
 
 app.use((err, req, res, next) => {
