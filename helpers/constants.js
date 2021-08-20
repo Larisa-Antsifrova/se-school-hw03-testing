@@ -27,6 +27,7 @@ const responseMessages = {
   registrationSuccess: 'You have successfully registered.',
   emailConflict: 'This email is already in use.',
   invalidCreds: 'Invalid credentials.',
+  noJWT: 'JWT token is not provided.',
 };
 
 module.exports = { HttpCodes, Ports, validationConfig, responseMessages };

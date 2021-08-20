@@ -1,12 +1,19 @@
 const Users = require('../repositories/users-repository');
 const PasswordService = require('./password-service');
 const TokenService = require('./jwt-token-service');
+const ApiError = require('../exceptions/api-errors');
 
 class AuthService {
-  constructor({ usersCollection, passwordService, tokenService }) {
+  constructor({
+    usersCollection,
+    passwordService,
+    tokenService,
+    errorHandler,
+  }) {
     this.usersCollection = usersCollection;
     this.passwordService = passwordService;
     this.tokenService = tokenService;
+    this.errorHandler = errorHandler;
   }
 
   async signUp({ name, email, password }) {
@@ -17,11 +24,7 @@ class AuthService {
       );
 
       if (doesAlreadyExist) {
-        // TODO: Write Error assembler
-        const error = new Error();
-        error.status = 409;
-        error.message = 'The email here is taken.';
-        throw error;
+        throw ApiError.conflict();
       }
 
       const hashedPassword = await this.passwordService.hashPassword(password);
@@ -42,11 +45,7 @@ class AuthService {
       const user = await this.usersCollection.getOneUserBy('email', email);
 
       if (!user) {
-        // TODO: Write Error assembler
-        const error = new Error();
-        error.status = 400;
-        error.message = 'The creds are wrong';
-        throw error;
+        throw ApiError.invalidCreds();
       }
 
       const isPasswordCorrect = await PasswordService.comparePassword(
@@ -55,11 +54,7 @@ class AuthService {
       );
 
       if (!isPasswordCorrect) {
-        // TODO: Write Error assembler
-        const error = new Error();
-        error.status = 400;
-        error.message = 'The creds are wrong';
-        throw error;
+        throw ApiError.invalidCreds();
       }
 
       const { id, name, email: userEmail } = user;
@@ -78,4 +73,5 @@ module.exports = new AuthService({
   usersCollection: Users,
   passwordService: PasswordService,
   tokenService: TokenService,
+  errorHandler: ApiError,
 });

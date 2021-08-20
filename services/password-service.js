@@ -1,14 +1,18 @@
 const bcrypt = require('bcryptjs');
 
 class PasswordService {
+  constructor(hashStrategy) {
+    this.hashStrategy = hashStrategy;
+    this.salt = 8;
+  }
+
   async hashPassword(password) {
-    const salt = 8;
-    return await bcrypt.hash(password, salt);
+    return await this.hashStrategy.hash(password, this.salt);
   }
 
   async comparePassword(password, userPassword) {
-    return await bcrypt.compare(password, userPassword);
+    return await this.hashStrategy.compare(password, userPassword);
   }
 }
 
-module.exports = new PasswordService();
+module.exports = new PasswordService(bcrypt);
