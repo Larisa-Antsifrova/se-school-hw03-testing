@@ -1,27 +1,30 @@
-const fs = require('fs/promises');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-const usersPath = path.join(__dirname, '..', 'db', 'users.json');
+const FsDbMapper = require('../fs_odm/fs-db-mapper');
 
-class User {
-  constructor(path) {
-    this.usersPath = path;
+const usersPath = path.join(__dirname, '..', 'db', 'users.json');
+const usersMapper = new FsDbMapper(usersPath);
+
+class Users {
+  constructor(mapper) {
+    this.mapper = mapper;
   }
 
   async getAllUsers() {
     try {
-      return JSON.parse(await fs.readFile(this.usersPath, 'utf-8'));
+      return await this.mapper.read();
     } catch (error) {
       console.log('Error in getAllUsers: ', error.message);
     }
   }
 
-  async getUserByEmail(email) {
+  async getOneUserBy(field) {
     try {
-      return (await this.getAllUsers()).find(user => user.email === email);
+      const allUsers = await this.mapper.read();
+      return allUsers.find(user => user[field] === field);
     } catch (error) {
-      console.log('Error in getUserByEmail: ', error.message);
+      console.log('Error in getOneUserBy: ', error.message);
     }
   }
 
@@ -36,10 +39,10 @@ class User {
         password,
       };
 
-      const allUsers = await this.getAllUsers();
+      const allUsers = await this.mapper.read();
       allUsers.push(newUser);
 
-      await fs.writeFile(this.usersPath, JSON.stringify(allUsers, null, 2));
+      await this.mapper.write(newUser);
 
       return { id, name, email };
     } catch (error) {
@@ -48,4 +51,4 @@ class User {
   }
 }
 
-module.exports = new User(usersPath);
+module.exports = new Users(usersMapper);
