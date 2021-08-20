@@ -1,4 +1,4 @@
-const { HttpCodes, responseMessages } = require('../helpers/constants');
+const { HttpCodes, Messages } = require('../helpers/constants');
 
 class ApiError extends Error {
   constructor({ status, message }) {
@@ -9,14 +9,14 @@ class ApiError extends Error {
   static conflict() {
     return new ApiError({
       status: HttpCodes.CONFLICT,
-      message: responseMessages.emailConflict,
+      message: Messages.emailConflict,
     });
   }
 
   static invalidCreds() {
     return new ApiError({
       status: HttpCodes.UNAUTHORIZED,
-      message: responseMessages.invalidCreds,
+      message: Messages.invalidCreds,
     });
   }
 }
