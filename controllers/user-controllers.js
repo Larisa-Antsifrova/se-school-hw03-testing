@@ -1,5 +1,5 @@
 const AuthService = require('../services/auth-service');
-const { HttpCodes, responseMessages } = require('../helpers/constants');
+const { HttpCodes, Messages } = require('../helpers/constants');
 
 const signupUser = async (req, res, next) => {
   try {
@@ -8,7 +8,7 @@ const signupUser = async (req, res, next) => {
     const user = await AuthService.signUp({ name, email, password });
 
     return res.status(HttpCodes.CREATED).json({
-      message: responseMessages.registrationSuccess,
+      message: Messages.registrationSuccess,
       user,
     });
   } catch (error) {
@@ -23,7 +23,7 @@ const loginUser = async (req, res, next) => {
     const user = await AuthService.login({ email, password });
 
     return res.status(HttpCodes.OK).json({
-      message: responseMessages.loginSuccess,
+      message: Messages.loginSuccess,
       user,
     });
   } catch (error) {
