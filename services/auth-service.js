@@ -2,6 +2,7 @@ const Users = require('../repositories/users-repository');
 const PasswordService = require('./password-service');
 const TokenService = require('./jwt-token-service');
 const ApiError = require('../exceptions/api-errors');
+const { HttpCodes, Messages } = require('../helpers/constants');
 
 class AuthService {
   constructor({
@@ -24,7 +25,10 @@ class AuthService {
       );
 
       if (doesAlreadyExist) {
-        throw ApiError.conflict();
+        throw new this.errorHandler({
+          status: HttpCodes.CONFLICT,
+          message: Messages.emailConflict,
+        });
       }
 
       const hashedPassword = await this.passwordService.hashPassword(password);
@@ -45,21 +49,31 @@ class AuthService {
       const user = await this.usersCollection.getOneUserBy('email', email);
 
       if (!user) {
-        throw ApiError.invalidCreds();
+        throw new this.errorHandler({
+          status: HttpCodes.UNAUTHORIZED,
+          message: Messages.invalidCreds,
+        });
       }
 
-      const isPasswordCorrect = await PasswordService.comparePassword(
+      const isPasswordCorrect = await this.passwordService.comparePassword(
         password,
         user.password,
       );
 
       if (!isPasswordCorrect) {
-        throw ApiError.invalidCreds();
+        throw new this.errorHandler({
+          status: HttpCodes.UNAUTHORIZED,
+          message: Messages.invalidCreds,
+        });
       }
 
       const { id, name, email: userEmail } = user;
 
-      const token = TokenService.generateToken({ id, name, email: userEmail });
+      const token = this.tokenService.generateToken({
+        id,
+        name,
+        email: userEmail,
+      });
 
       return { id, name, email: userEmail, token };
     } catch (error) {
