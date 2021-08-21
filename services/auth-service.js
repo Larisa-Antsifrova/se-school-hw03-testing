@@ -1,7 +1,3 @@
-const Users = require('../repositories/users-repository');
-const PasswordService = require('./password-service');
-const TokenService = require('./jwt-token-service');
-const ApiError = require('../exceptions/api-errors');
 const { HttpCodes, Messages } = require('../helpers/constants');
 
 class AuthService {
@@ -39,7 +35,6 @@ class AuthService {
         password: hashedPassword,
       });
     } catch (error) {
-      console.log('Error in createUser: ', error.message);
       throw error;
     }
   }
@@ -77,15 +72,9 @@ class AuthService {
 
       return { id, name, email: userEmail, token };
     } catch (error) {
-      console.log('Error in loginUser: ', error.message);
       throw error;
     }
   }
 }
 
-module.exports = new AuthService({
-  usersCollection: Users,
-  passwordService: PasswordService,
-  tokenService: TokenService,
-  errorHandler: ApiError,
-});
+module.exports = AuthService;
