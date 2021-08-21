@@ -1,11 +1,11 @@
-const AuthService = require('../services/auth-service');
+const { apiAuthService } = require('../configs/services-config');
 const { HttpCodes, Messages } = require('../helpers/constants');
 
 const signupUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
-    const user = await AuthService.signUp({ name, email, password });
+    const user = await apiAuthService.signUp({ name, email, password });
 
     return res.status(HttpCodes.CREATED).json({
       message: Messages.registrationSuccess,
@@ -20,7 +20,7 @@ const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const user = await AuthService.login({ email, password });
+    const user = await apiAuthService.login({ email, password });
 
     return res.status(HttpCodes.OK).json({
       message: Messages.loginSuccess,
