@@ -7,4 +7,16 @@ const coinlayerRatesService = new RatesService({
   errorHandler: ApiError,
 });
 
-module.exports = { coinlayerRatesService };
+const AuthService = require('../services/auth-service');
+const Users = require('../repositories/users-repository');
+const PasswordService = require('../services/password-service');
+const TokenService = require('../services/jwt-token-service');
+
+const apiAuthService = new AuthService({
+  usersCollection: Users,
+  passwordService: PasswordService,
+  tokenService: TokenService,
+  errorHandler: ApiError,
+});
+
+module.exports = { coinlayerRatesService, apiAuthService };
