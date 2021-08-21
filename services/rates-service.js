@@ -1,17 +1,20 @@
-const CoinlayerProvider = require('../rates_providers/coinlayer-provider');
-
+const { HttpCodes } = require('../helpers/constants');
 class RatesService {
-  constructor(provider) {
+  constructor({ provider, errorHandler }) {
     this.provider = provider;
+    this.errorHandler = errorHandler;
   }
 
   async getBtcToUahRate() {
     try {
       return await this.provider.fetchBtcToUahRate();
     } catch (error) {
-      console.log('Error in getBtcToUahRate: ', error.message);
+      throw new this.errorHandler({
+        status: HttpCodes.BAD_REQUEST,
+        message: error.message,
+      });
     }
   }
 }
 
-module.exports = new RatesService(CoinlayerProvider);
+module.exports = RatesService;
