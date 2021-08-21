@@ -18,7 +18,7 @@ class TokenService {
 
   verifyToken(token) {
     try {
-      jwt.verify(token, JWT_SECRET_KEY);
+      return jwt.verify(token, JWT_SECRET_KEY);
     } catch (error) {
       throw new this.errorHandler({
         status: HttpCodes.UNAUTHORIZED,
