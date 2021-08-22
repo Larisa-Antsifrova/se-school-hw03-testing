@@ -1,5 +1,3 @@
-const bcrypt = require('bcryptjs');
-
 class PasswordService {
   constructor(hashStrategy) {
     this.hashStrategy = hashStrategy;
@@ -15,4 +13,4 @@ class PasswordService {
   }
 }
 
-module.exports = new PasswordService(bcrypt);
+module.exports = PasswordService;
