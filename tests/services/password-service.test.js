@@ -1,36 +1,42 @@
+const bcrypt = require('bcryptjs');
 const PasswordService = require('../../services/password-service');
+
+jest.mock('bcryptjs');
+
+const bcryptPasswordService = new PasswordService(bcrypt);
+
+const submittedPassword = '12345';
+const hashedPassword =
+  '$2a$08$hJDFnQNFK0LKglVazvqnsuHmL8u/XfuFNDFQCxKVR72kCuL2LthEi';
 
 describe('PasswordService: hashPassword method ', () => {
   test('should return hashed password', async () => {
-    const password = '12345';
+    bcrypt.hash = jest.fn(() => hashedPassword);
 
-    const result = await PasswordService.hashPassword(password);
+    const result = await bcryptPasswordService.hashPassword(submittedPassword);
 
-    expect(result).not.toBe(password);
+    expect(result).toBe(hashedPassword);
   });
 });
 
 describe('PasswordService: comparePassword method ', () => {
   test('should return true if passwords match', async () => {
-    const submittedPassword = '12345';
-    const savedPassword = await PasswordService.hashPassword(submittedPassword);
+    bcrypt.compare = jest.fn(() => true);
 
-    const result = await PasswordService.comparePassword(
+    const result = await bcryptPasswordService.comparePassword(
       submittedPassword,
-      savedPassword,
+      hashedPassword,
     );
 
     expect(result).toBe(true);
   });
 
   test('should return false if passwords do not match', async () => {
-    const submittedPassword = '12345';
-    const savedPassword =
-      '$2a$08$hJDFnQNFK0LKglVazvqnsuHmL8u/XfuFNDFQCxKVR72kCuL2LthEi';
+    bcrypt.compare = jest.fn(() => false);
 
-    const result = await PasswordService.comparePassword(
+    const result = await bcryptPasswordService.comparePassword(
       submittedPassword,
-      savedPassword,
+      hashedPassword,
     );
 
     expect(result).toBe(false);
