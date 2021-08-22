@@ -1,12 +1,12 @@
 const AuthService = require('../../services/auth-service');
-const Users = require('../../repositories/users-repository');
+const { Users } = require('../../configs/users-repository-config');
 const ApiError = require('../../exceptions/api-errors');
 const {
   bcryptPasswordService,
   jwtTokenService,
 } = require('../../configs/services-config');
 
-jest.mock('../../repositories/users-repository');
+jest.mock('../../configs/users-repository-config');
 jest.mock('../../services/password-service');
 jest.mock('../../services/jwt-token-service');
 

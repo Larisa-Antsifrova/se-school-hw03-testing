@@ -1,36 +1,30 @@
-const path = require('path');
-const { v4: uuidv4 } = require('uuid');
-
-const FsDbMapper = require('../fs_odm/fs-db-mapper');
-
-const usersPath = path.join(__dirname, '..', 'db', 'users.json');
-const usersMapper = new FsDbMapper(usersPath);
-
-class Users {
-  constructor(mapper) {
+class UsersRepository {
+  constructor({ mapper, idGenerator }) {
     this.mapper = mapper;
+    this.idGenerator = idGenerator;
   }
 
   async getAllUsers() {
     try {
       return await this.mapper.read();
     } catch (error) {
-      console.log('Error in getAllUsers: ', error.message);
+      throw error;
     }
   }
 
   async getOneUserBy(field, value) {
     try {
       const allUsers = await this.mapper.read();
+
       return allUsers.find(user => user[field] === value);
     } catch (error) {
-      console.log('Error in getOneUserBy: ', error.message);
+      throw error;
     }
   }
 
   async addNewUser({ name, email, password }) {
     try {
-      const id = uuidv4();
+      const id = this.idGenerator();
 
       const newUser = {
         id,
@@ -40,15 +34,16 @@ class Users {
       };
 
       const allUsers = await this.mapper.read();
+
       allUsers.push(newUser);
 
       await this.mapper.write(allUsers);
 
       return { id, name, email };
     } catch (error) {
-      console.log('Error in addNewUser: ', error.message);
+      throw error;
     }
   }
 }
 
-module.exports = new Users(usersMapper);
+module.exports = UsersRepository;
