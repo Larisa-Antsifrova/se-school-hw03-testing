@@ -1,5 +1,5 @@
-const TokenService = require('../services/jwt-token-service');
 const ApiError = require('../exceptions/api-errors');
+const { jwtTokenService } = require('../configs/services-config');
 const { HttpCodes, Messages } = require('../helpers/constants');
 
 const isAuthenticated = (req, res, next) => {
@@ -13,7 +13,7 @@ const isAuthenticated = (req, res, next) => {
       });
     }
 
-    TokenService.verifyToken(token);
+    jwtTokenService.verifyToken(token);
 
     next();
   } catch (error) {
