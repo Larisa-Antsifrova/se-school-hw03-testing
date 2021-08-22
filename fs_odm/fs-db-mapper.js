@@ -6,11 +6,19 @@ class FsDbMapper {
   }
 
   async read() {
-    return JSON.parse(await fs.readFile(this.usersPath, 'utf-8'));
+    try {
+      return JSON.parse(await fs.readFile(this.usersPath, 'utf-8'));
+    } catch (error) {
+      throw error;
+    }
   }
 
   async write(data) {
-    await fs.writeFile(this.usersPath, JSON.stringify(data, null, 2));
+    try {
+      await fs.writeFile(this.usersPath, JSON.stringify(data, null, 2));
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
