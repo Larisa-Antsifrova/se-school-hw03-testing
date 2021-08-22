@@ -28,7 +28,7 @@ describe('TokenService: generateToken method', () => {
 
     const token = jwtTokenService.generateToken(payload);
 
-    expect(token).toEqual(expect.any(String));
+    expect(token).toBe(tokenExample);
   });
 });
 
