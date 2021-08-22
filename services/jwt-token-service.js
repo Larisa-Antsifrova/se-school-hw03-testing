@@ -1,24 +1,22 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-
-const ApiError = require('../exceptions/api-errors');
 const { HttpCodes } = require('../helpers/constants');
-
-const { JWT_SECRET_KEY } = process.env;
+const { TokenLife } = require('../configs/limits-config');
 
 class TokenService {
-  constructor({ secretKey, errorHandler }) {
+  constructor({ jwtProvider, secretKey, errorHandler }) {
+    this.jwtProvider = jwtProvider;
     this.secretKey = secretKey;
     this.errorHandler = errorHandler;
   }
 
   generateToken(payload) {
-    return jwt.sign(payload, this.secretKey, { expiresIn: '4h' });
+    return this.jwtProvider.sign(payload, this.secretKey, {
+      expiresIn: TokenLife.access,
+    });
   }
 
   verifyToken(token) {
     try {
-      return jwt.verify(token, JWT_SECRET_KEY);
+      return this.jwtProvider.verify(token, this.secretKey);
     } catch (error) {
       throw new this.errorHandler({
         status: HttpCodes.UNAUTHORIZED,
@@ -28,7 +26,4 @@ class TokenService {
   }
 }
 
-module.exports = new TokenService({
-  secretKey: JWT_SECRET_KEY,
-  errorHandler: ApiError,
-});
+module.exports = TokenService;

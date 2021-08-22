@@ -23,7 +23,7 @@ describe('RatesService: getBtcToUahRate method', () => {
     };
   });
 
-  test('should return BTC to UAH rates', async () => {
+  test('should return BTC to UAH rate', async () => {
     coinlayerRatesService.provider.fetchBtcToUahRate.mockReturnValue(response);
 
     const result = await coinlayerRatesService.getBtcToUahRate();
@@ -36,11 +36,8 @@ describe('RatesService: getBtcToUahRate method', () => {
       throw new Error();
     });
 
-    try {
-      await coinlayerRatesService.getBtcToUahRate();
-    } catch (error) {
-      expect(error).toHaveProperty('status');
-      expect(error).toHaveProperty('message');
-    }
+    await expect(() =>
+      coinlayerRatesService.getBtcToUahRate(),
+    ).rejects.toThrow();
   });
 });

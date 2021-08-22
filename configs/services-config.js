@@ -1,22 +1,41 @@
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
 const RatesService = require('../services/rates-service');
+const AuthService = require('../services/auth-service');
+const PasswordService = require('../services/password-service');
+const TokenService = require('../services/jwt-token-service');
+
+const Users = require('../repositories/users-repository');
 const CoinlayerProvider = require('../rates_providers/coinlayer-provider');
 const ApiError = require('../exceptions/api-errors');
+
+const { JWT_SECRET_KEY } = process.env;
 
 const coinlayerRatesService = new RatesService({
   provider: CoinlayerProvider,
   errorHandler: ApiError,
 });
 
-const AuthService = require('../services/auth-service');
-const Users = require('../repositories/users-repository');
-const PasswordService = require('../services/password-service');
-const TokenService = require('../services/jwt-token-service');
-
-const apiAuthService = new AuthService({
-  usersCollection: Users,
-  passwordService: PasswordService,
-  tokenService: TokenService,
+const jwtTokenService = new TokenService({
+  jwtProvider: jwt,
+  secretKey: JWT_SECRET_KEY,
   errorHandler: ApiError,
 });
 
-module.exports = { coinlayerRatesService, apiAuthService };
+const bcryptPasswordService = new PasswordService(bcrypt);
+
+const apiAuthService = new AuthService({
+  usersCollection: Users,
+  passwordService: bcryptPasswordService,
+  tokenService: jwtTokenService,
+  errorHandler: ApiError,
+});
+
+module.exports = {
+  coinlayerRatesService,
+  jwtTokenService,
+  bcryptPasswordService,
+  apiAuthService,
+};
