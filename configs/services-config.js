@@ -7,7 +7,7 @@ const AuthService = require('../services/auth-service');
 const PasswordService = require('../services/password-service');
 const TokenService = require('../services/jwt-token-service');
 
-const Users = require('../repositories/users-repository');
+const { Users } = require('./users-repository-config');
 const CoinlayerProvider = require('../rates_providers/coinlayer-provider');
 const ApiError = require('../exceptions/api-errors');
 
