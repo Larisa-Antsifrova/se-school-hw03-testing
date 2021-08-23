@@ -5,6 +5,12 @@ const {
   bcryptPasswordService,
   jwtTokenService,
 } = require('../../configs/services-config');
+const {
+  candidate,
+  savedUser,
+  currentUser,
+  tokenExample,
+} = require('./test-data');
 
 jest.mock('../../configs/users-repository-config');
 jest.mock('../../services/password-service');
@@ -17,66 +23,50 @@ const apiAuthService = new AuthService({
   errorHandler: ApiError,
 });
 
-const candidate = {
-  email: 'test@test.com',
-  password: 'test12345',
-};
+describe('AuthService:', () => {
+  describe('signUp method', () => {
+    test('should return new user when successfully registered', async () => {
+      Users.addNewUser = jest.fn(() => savedUser);
 
-const savedUser = {
-  id: '',
-  name: 'Test',
-  email: 'test@test.com',
-};
+      const result = await apiAuthService.signUp(candidate);
 
-const currentUser = {
-  id: '',
-  name: 'Test',
-  email: 'test@test.com',
-  token: '',
-};
+      expect(result).toHaveProperty('id');
+      expect(result).not.toHaveProperty('password');
+    });
 
-describe('AuthService: signUp method', () => {
-  test('should return new user when successfully signed up', async () => {
-    Users.addNewUser = jest.fn(() => savedUser);
+    test('should throw error if user already exists', async () => {
+      Users.getOneUserBy = jest.fn(() => savedUser);
 
-    const result = await apiAuthService.signUp(candidate);
-
-    expect(result).toHaveProperty('id');
-    expect(result).not.toHaveProperty('password');
+      await expect(() => apiAuthService.signUp(candidate)).rejects.toThrow();
+    });
   });
 
-  test('should throw error if user already exists', async () => {
-    Users.getOneUserBy = jest.fn(() => savedUser);
+  describe('login method', () => {
+    beforeEach(() => {
+      jwtTokenService.generateToken = jest.fn(() => tokenExample);
+    });
 
-    await expect(() => apiAuthService.signUp(candidate)).rejects.toThrow();
-  });
-});
+    test('should return current user when successfully logged in', async () => {
+      Users.getOneUserBy = jest.fn(() => savedUser);
+      bcryptPasswordService.comparePassword = jest.fn(() => true);
 
-describe('AuthService: login method', () => {
-  beforeEach(() => {
-    apiAuthService.tokenService.generateToken = jest.fn(() => '');
-  });
+      const result = await apiAuthService.login(candidate);
 
-  test('should return current user when successfully logged in', async () => {
-    Users.getOneUserBy = jest.fn(() => savedUser);
-    bcryptPasswordService.comparePassword = jest.fn(() => true);
+      expect(result).toEqual(currentUser);
+    });
 
-    const result = await apiAuthService.login(candidate);
+    test('should throw error if email is incorrect', async () => {
+      Users.getOneUserBy = jest.fn(() => {});
+      bcryptPasswordService.comparePassword = jest.fn(() => true);
 
-    expect(result).toEqual(currentUser);
-  });
+      await expect(() => apiAuthService.login(candidate)).rejects.toThrow();
+    });
 
-  test('should throw error if email is not correct', async () => {
-    Users.getOneUserBy = jest.fn(() => {});
-    bcryptPasswordService.comparePassword = jest.fn(() => true);
+    test('should throw error if password is incorrect', async () => {
+      Users.getOneUserBy = jest.fn(() => savedUser);
+      bcryptPasswordService.comparePassword = jest.fn(() => false);
 
-    await expect(() => apiAuthService.login(candidate)).rejects.toThrow();
-  });
-
-  test('should throw error if password is not correct', async () => {
-    Users.getOneUserBy = jest.fn(() => savedUser);
-    bcryptPasswordService.comparePassword = jest.fn(() => false);
-
-    await expect(() => apiAuthService.login(candidate)).rejects.toThrow();
+      await expect(() => apiAuthService.login(candidate)).rejects.toThrow();
+    });
   });
 });
