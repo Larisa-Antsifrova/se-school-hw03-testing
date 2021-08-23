@@ -4,28 +4,42 @@ const coinlayer = require('../../http/axios-coinlayer');
 jest.mock('../../http/axios-coinlayer');
 
 describe('CoinlayerProvider: fetchBtcToUahRate method', () => {
-  const ratesData = {
+  const successResponse = {
     data: {
-      timestamp: 1629672727,
+      success: true,
+      terms: 'https://coinlayer.com/terms',
+      privacy: 'https://coinlayer.com/privacy',
+      timestamp: 1629755646,
       target: 'UAH',
-      rates: {
-        BTC: 1307520.273569,
-      },
+      rates: { BTC: 1321519.72395 },
+    },
+  };
+
+  const ratesInfo = {
+    timestamp: 1629755646,
+    target: 'UAH',
+    rates: { BTC: 1321519.72395 },
+  };
+
+  const failResponse = {
+    success: false,
+    error: {
+      code: 101,
+      type: 'invalid_access_key',
+      info: 'You have not supplied a valid API Access Key. [Technical Support: support@apilayer.com]',
     },
   };
 
   test('should return basic BTC to UAH rates info', async () => {
-    coinlayer.get = jest.fn(() => ratesData);
+    coinlayer.get.mockReturnValue(successResponse);
 
-    const result = await CoinlayerProvider.fetchBtcToUahRate();
+    const response = await CoinlayerProvider.fetchBtcToUahRate();
 
-    expect(result).toEqual(ratesData.data);
+    expect(response).toEqual(ratesInfo);
   });
 
   test('should throw error if fethc failed', async () => {
-    coinlayer.get = jest.fn(() => {
-      throw Error();
-    });
+    coinlayer.get.mockReturnValue(failResponse);
 
     await expect(() => CoinlayerProvider.fetchBtcToUahRate()).rejects.toThrow();
   });
