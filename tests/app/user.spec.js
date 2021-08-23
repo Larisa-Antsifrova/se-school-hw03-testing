@@ -3,19 +3,9 @@ const request = require('supertest');
 const app = require('../../app');
 const { Users } = require('../../configs/users-repository-config');
 const { HttpCodes } = require('../../helpers/constants');
+const { candidate, candidateWithWrongCreds } = require('./test-data');
 
 describe('/user endpoints', () => {
-  const candidate = {
-    name: 'Software Engineering School',
-    email: 'software@engineering.school',
-    password: 'ses12345',
-  };
-
-  const candidateWithWrongCreds = {
-    email: 'software@engineering.school',
-    password: 'ses123456',
-  };
-
   beforeAll(async () => {
     await Users.deleteOneUserBy('email', candidate.email);
   });
@@ -34,7 +24,7 @@ describe('/user endpoints', () => {
       expect(response.statusCode).toBe(HttpCodes.CREATED);
     });
 
-    it('should respond with 409 status code when the user already exist', async () => {
+    it('should respond with 409 status code when user already exists', async () => {
       const response = await request(app)
         .post('/user/create')
         .send(candidate)
