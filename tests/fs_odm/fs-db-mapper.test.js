@@ -3,7 +3,7 @@ const path = require('path');
 
 const FsDbMapper = require('../../fs_odm/fs-db-mapper');
 
-const testDbPath = path.join(__dirname, 'test-db.json');
+const testDbPath = path.join(__dirname, '..', '..', 'db', 'test-db.json');
 const testDbMapper = new FsDbMapper(testDbPath);
 
 jest.mock('fs/promises');
