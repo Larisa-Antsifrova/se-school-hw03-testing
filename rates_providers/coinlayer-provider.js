@@ -23,7 +23,7 @@ class CoinlayerProvider {
 
       return { timestamp, target, rates };
     } catch (error) {
-      console.log('Error in fetchBtcToUahRate: ', error.message);
+      throw error;
     }
   }
 }
