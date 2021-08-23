@@ -1,5 +1,6 @@
 require('dotenv').config();
 const coinlayer = require('../http/axios-coinlayer');
+const ApiError = require('../exceptions/api-errors');
 
 const { COINLAYER_API_KEY } = process.env;
 
@@ -11,15 +12,21 @@ class CoinlayerProvider {
 
   async fetchBtcToUahRate() {
     try {
-      const {
-        data: { timestamp, target, rates },
-      } = await this.http.get('/live', {
+      const { data } = await this.http.get('/live', {
         params: {
           access_key: this.apiKey,
           target: 'UAH',
           symbols: 'BTC',
         },
       });
+
+      if (!data.success) {
+        throw new ApiError({
+          message: data.error.type,
+        });
+      }
+
+      const { timestamp, target, rates } = data;
 
       return { timestamp, target, rates };
     } catch (error) {
