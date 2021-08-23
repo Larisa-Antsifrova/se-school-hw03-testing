@@ -11,6 +11,11 @@ describe('/user endpoints', () => {
     password: 'ses12345',
   };
 
+  const candidateWithWrongCreds = {
+    email: 'software@engineering.school',
+    password: 'ses123456',
+  };
+
   beforeAll(async () => {
     await Users.deleteOneUserBy('email', candidate.email);
   });
@@ -74,6 +79,15 @@ describe('/user endpoints', () => {
         .set('Accept', 'application/json');
 
       expect(response.statusCode).toBe(HttpCodes.BAD_REQUEST);
+    });
+
+    it('should respond with 401 status code when user does not exist', async () => {
+      const response = await request(app)
+        .post('/user/login')
+        .send(candidateWithWrongCreds)
+        .set('Accept', 'application/json');
+
+      expect(response.statusCode).toBe(HttpCodes.UNAUTHORIZED);
     });
   });
 });
