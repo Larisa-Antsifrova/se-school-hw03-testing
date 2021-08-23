@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -9,9 +8,7 @@ const btcRouter = require('./routes/btc-routes');
 
 const { ApiLimiterConfig } = require('./configs/api-limiter-config');
 const { Limits } = require('./configs/limits-config');
-const { Ports, HttpCodes, Messages } = require('./helpers/constants');
-
-const PORT = process.env.PORT || Ports.default;
+const { HttpCodes, Messages } = require('./helpers/constants');
 
 const app = express();
 
@@ -37,10 +34,6 @@ app.use((err, req, res, next) => {
 
 process.on('unhandledRejection', (reason, promise) => {
   console.log('Unhandled Rejection at:', promise, 'reason:', reason);
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;

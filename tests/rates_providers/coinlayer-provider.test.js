@@ -1,31 +1,20 @@
 const CoinlayerProvider = require('../../rates_providers/coinlayer-provider');
 const coinlayer = require('../../http/axios-coinlayer');
+const { successResponse, ratesInfo, failResponse } = require('./test-data');
 
 jest.mock('../../http/axios-coinlayer');
 
 describe('CoinlayerProvider: fetchBtcToUahRate method', () => {
-  const ratesData = {
-    data: {
-      timestamp: 1629672727,
-      target: 'UAH',
-      rates: {
-        BTC: 1307520.273569,
-      },
-    },
-  };
-
   test('should return basic BTC to UAH rates info', async () => {
-    coinlayer.get = jest.fn(() => ratesData);
+    coinlayer.get.mockReturnValue(successResponse);
 
-    const result = await CoinlayerProvider.fetchBtcToUahRate();
+    const response = await CoinlayerProvider.fetchBtcToUahRate();
 
-    expect(result).toEqual(ratesData.data);
+    expect(response).toEqual(ratesInfo);
   });
 
   test('should throw error if fethc failed', async () => {
-    coinlayer.get = jest.fn(() => {
-      throw Error();
-    });
+    coinlayer.get.mockReturnValue(failResponse);
 
     await expect(() => CoinlayerProvider.fetchBtcToUahRate()).rejects.toThrow();
   });
