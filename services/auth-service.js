@@ -27,7 +27,7 @@ class AuthService {
         });
       }
 
-      const hashedPassword = await this.passwordService.hashPassword(password);
+      const hashedPassword = await this.passwordService.hash(password);
 
       return await this.usersCollection.addNewUser({
         name,
@@ -50,7 +50,7 @@ class AuthService {
         });
       }
 
-      const isPasswordCorrect = await this.passwordService.comparePassword(
+      const isPasswordCorrect = await this.passwordService.compare(
         password,
         user.password,
       );
