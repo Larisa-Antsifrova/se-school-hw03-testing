@@ -54,6 +54,10 @@ Hi!
       npm run start:dev
 ```
 
+## Setting up the app locally
+
+Testing and structure
+
 ## Endpoints
 
 ### / - Home
@@ -237,21 +241,29 @@ ResponseBody: {
 
 ## Structure
 
-| File/Folder  | Description                                                 | Example                     |
-| :----------- | :---------------------------------------------------------- | :-------------------------- |
-| index.js     | Project's entry point                                       | -                           |
-| .example.env | Provides info about what environment variables are expected | API_KEY                     |
-| routes       | Keeps all projects endpoints                                | /user/create, /user/login   |
-| controllers  | Keeps endpoints handlers                                    | -                           |
-| db           | Keeps imitation of a local database                         | -                           |
-| repositories | Keeps methods to work with database                         | -                           |
-| services     | Keeps methods to work with external services                | Coinlayer                   |
-| middleware   | Keeps middleware functions                                  | isAuthenticated, validation |
-| helpers      | Keeps project's constants and configs                       | HTTP codes, API limiter     |
+| File/Folder     | Description                                                        | Example                                               |
+| :-------------- | :----------------------------------------------------------------- | :---------------------------------------------------- |
+| app.js          | Project's app starting point                                       | -                                                     |
+| server.js       | Project's server set up and listening                              | -                                                     |
+| configs         | Configurations of specific service classes and api characteristics | validation-config, repository-config, services-config |
+| controllers     | Endpoints' handlers                                                | home-controllers, user-controllers                    |
+| db              | Two file system databases: for testing and for development         | test-db                                               |
+| exceptions      | Class to generate custom api errors                                | api-errors                                            |
+| fs_odm          | Layer to word directly with file system                            | fs-db-mapper                                          |
+| helpers         | Project's constants                                                | HTTP codes, Messages                                  |
+| http            | Configured axios client                                            | axios-coinlayer                                       |
+| middleware      | Middleware functions                                               | isAuthenticated, validation                           |
+| rates_providers | Configured providers of rates                                      | coinlayer-provider                                    |
+| repositories    | CRUD methods to work with database collections                     | users-repository                                      |
+| routes          | Endpoints                                                          | /user/create, /user/login                             |
+| services        | Classes to work with app's services                                | auth-service, password-service                        |
+| tests           | Unit and integration tests                                         | auth-service.test, password-service.test              |
+| tests_postman   | Tests for Postman collection                                       | postman-collection                                    |
+| .example.env    | Info about expected environment variables                          | JWT_SECRET_KEY                                        |
 
-## Tools and resources
+## Tools
 
-- JavaScript (Node.js) - as primary language.
+- JavaScript (Node.js)
 - [Express](https://expressjs.com/) - Node.js web application framework.
 - [Axios](https://www.npmjs.com/package/axios) - for fetch requests from external service.
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs) - for hashing passwords.
@@ -259,4 +271,22 @@ ResponseBody: {
 - [helmet](https://www.npmjs.com/package/helmet) - for securing the Web API.
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) - for setting rate limits on requests to the Web API.
 - [Joi](https://joi.dev/api/) - for validating data provided in POST requests.
-- [Coinlayer](https://coinlayer.com/documentation) - external API to get current rate information from.
+- [Jest](https://jestjs.io/) - for testing: primary framework.
+- [supertest](https://www.npmjs.com/package/supertest) - for integration testing.
+- [Postman](https://www.postman.com/) - for automated endpoints testing.
+- [newman](https://www.npmjs.com/package/newman) - for launching authomated tests in cli.
+- [newman-reporter-htmlextra](https://www.npmjs.com/package/newman-reporter-htmlextra) - for generating automated tests report.
+
+## Resources
+
+Rates provider:
+
+- [Coinlayer](https://coinlayer.com/documentation)
+
+Testing:
+
+- [Jest Docs](https://jestjs.io/docs/getting-started)
+- [supertest Docs](https://github.com/visionmedia/supertest)
+- [Postman Docs](https://learning.postman.com/docs/writing-scripts/test-scripts/)
+- [newman Docs](https://github.com/postmanlabs/newman)
+- [V.Khorikov's Webinar](https://www.youtube.com/watch?v=AAD9se2LjuI)
