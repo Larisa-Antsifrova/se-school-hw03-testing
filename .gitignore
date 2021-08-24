@@ -108,3 +108,6 @@ dist
 
 # newman reporters
 newman/
+
+# further changes in db files
+db/
