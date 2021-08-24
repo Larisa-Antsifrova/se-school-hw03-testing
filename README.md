@@ -12,13 +12,22 @@ The homework's goal is:
 
 - to write unit and integration tests
 
-The projects's motto:
+The homework's motto:
 
 - _Юнит-тест проверяет правильность работы одной единицы поведения. (с) В.Х._
 
 ## Note to code reviewer
 
-Hi!
+Hi Bogdan!  
+&nbsp;  
+Thank you for the homework task. That was a great opportunity to learn more about testing frameworks that were on my list.  
+The ReadMe is long, but relevant sections are:
+
+- [Testing](#testing)
+- [Structure](#structure)
+
+I will be glad to hear any feedback and suggestions.  
+Happy reviewing :)
 
 ## Setting up the app locally
 
@@ -306,7 +315,6 @@ ResponseBody: {
 - [helmet](https://www.npmjs.com/package/helmet) - for securing the Web API.
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) - for setting rate limits on requests to the Web API.
 - [Joi](https://joi.dev/api/) - for validating data provided in POST requests.
-  &nbsp;
 - [Jest](https://jestjs.io/) - for testing: primary framework.
 - [supertest](https://www.npmjs.com/package/supertest) - for integration testing.
 - [Postman](https://www.postman.com/) - for automated endpoints testing.
