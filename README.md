@@ -12,9 +12,9 @@ The homework's goal is:
 
 - to write unit and integration tests
 
-**The projects's motto:**
+The projects's motto:
 
-_Юнит-тест проверяет правильность работы одной единицы поведения. (с) В.Х._
+- _Юнит-тест проверяет правильность работы одной единицы поведения. (с) В.Х._
 
 ## Note to code reviewer
 
@@ -58,7 +58,7 @@ Hi!
 
 ### / - Home
 
-Endpoint returns welcome message with basic information about other endpoints.
+Returns welcome message with basic information about other endpoints.
 
 #### Home endpoint request
 
@@ -81,13 +81,12 @@ ResponseBody: {
 
 ```
 
-### /user/create - Registration of new user
+### /user/create - Registration of a new user
 
-Endpoint for registering new users.
+Registers new users.
 
-- Email and password are required. Name is optional.
-- If no name is provided, 'Guest' is set as default.
-- Email and password fields are validated.
+- Name, email and password are required.
+- The fields are validated with Joi library.
 - If the email is already in use, the error of conflict is returned.
 - If validation is successful and email is unique, the password is hashed and the new user is saved in database.
 - No authentication token is returned in case verification stage will be added (for example, verification via e-mail).
@@ -142,11 +141,11 @@ ResponseBody: {
 
 ### /user/login - Logging in a user
 
-Endpoint to authenticate a user.
+Authenticates a user.
 
 - Email and password are required.
-- Email and password fields are validated only for their presence.
-- If a user with the provided e-mail and or password does not exist in database, general error message is returned.
+- The fields are validated only for their presence.
+- If a user with the provided e-mail and/or password does not exist in database, general error message is returned.
 - If validation is successful and credentials are right, the JSON Web Token is created and returned.
 - JWT has limited life span.
 
@@ -197,7 +196,7 @@ ResponseBody: {
   "user": {
       "name": "Software Engineering School",
       "email": "software@engineering.school",
-      "token": "header.payload.signature"
+      "token": <header.payload.signature>
     }
 }
 
@@ -205,7 +204,7 @@ ResponseBody: {
 
 ### /btcRate - Current BTC to UAH rate information
 
-Endpoint to provide current rate of BTC to UAH.
+Provides current rate of BTC to UAH.
 
 - The endpoint is available only for authenticated users.
 - isAuthenticated middleware verifies JWT in Authorization header (Bearer token).
