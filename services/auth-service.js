@@ -13,7 +13,7 @@ class AuthService {
     this.errorHandler = errorHandler;
   }
 
-  async signUp({ name, email, password }) {
+  async signup({ name, email, password }) {
     try {
       const doesAlreadyExist = await this.usersCollection.getOneUserBy(
         'email',

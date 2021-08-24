@@ -24,11 +24,11 @@ const apiAuthService = new AuthService({
 });
 
 describe('AuthService:', () => {
-  describe('signUp method', () => {
+  describe('signup method', () => {
     test('should return new user when successfully registered', async () => {
       Users.addNewUser = jest.fn(() => savedUser);
 
-      const result = await apiAuthService.signUp(candidate);
+      const result = await apiAuthService.signup(candidate);
 
       expect(result).toHaveProperty('id');
       expect(result).not.toHaveProperty('password');
@@ -37,7 +37,7 @@ describe('AuthService:', () => {
     test('should throw error if user already exists', async () => {
       Users.getOneUserBy = jest.fn(() => savedUser);
 
-      await expect(() => apiAuthService.signUp(candidate)).rejects.toThrow();
+      await expect(() => apiAuthService.signup(candidate)).rejects.toThrow();
     });
   });
 

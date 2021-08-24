@@ -5,7 +5,7 @@ const signupUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
-    const user = await apiAuthService.signUp({ name, email, password });
+    const user = await apiAuthService.signup({ name, email, password });
 
     return res.status(HttpCodes.CREATED).json({
       message: Messages.registrationSuccess,
