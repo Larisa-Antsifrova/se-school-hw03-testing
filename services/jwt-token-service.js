@@ -14,7 +14,7 @@ class TokenService {
     });
   }
 
-  verifyToken(token) {
+  verify(token) {
     try {
       return this.jwtProvider.verify(token, this.secretKey);
     } catch (error) {

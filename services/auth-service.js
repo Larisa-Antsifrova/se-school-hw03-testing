@@ -13,7 +13,7 @@ class AuthService {
     this.errorHandler = errorHandler;
   }
 
-  async signUp({ name, email, password }) {
+  async signup({ name, email, password }) {
     try {
       const doesAlreadyExist = await this.usersCollection.getOneUserBy(
         'email',
@@ -27,7 +27,7 @@ class AuthService {
         });
       }
 
-      const hashedPassword = await this.passwordService.hashPassword(password);
+      const hashedPassword = await this.passwordService.hash(password);
 
       return await this.usersCollection.addNewUser({
         name,
@@ -50,7 +50,7 @@ class AuthService {
         });
       }
 
-      const isPasswordCorrect = await this.passwordService.comparePassword(
+      const isPasswordCorrect = await this.passwordService.compare(
         password,
         user.password,
       );

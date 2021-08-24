@@ -8,6 +8,8 @@ This REST API web server app provides basic features:
 - logging existing users in
 - showing current BTC to UAH rate to authorized users
 
+The db files are commited for example purposes.
+
 The homework's goal is:
 
 - to write unit and integration tests
@@ -95,6 +97,8 @@ These tests can be run with the command:
 ```
       npm run test:postman
 ```
+
+The script will run API tests, print feedback in console, and create _newman_ folder with fancy report in html format. Each test run generates new report.
 
 Disclamer:
 

@@ -1,22 +1,23 @@
 const Joi = require('joi');
+
 const { HttpCodes } = require('../helpers/constants');
-const { validationConfig } = require('../configs/validation-config');
+const {
+  validationConfig: {
+    minNameLength,
+    maxNameLength,
+    minDomainSegments,
+    minPasswordLength,
+  },
+} = require('../configs/validation-config');
 
 const schemaRegisterUser = Joi.object({
-  name: Joi.string()
-    .trim()
-    .min(validationConfig.minNameLength)
-    .max(validationConfig.maxNameLength)
-    .required(),
+  name: Joi.string().trim().min(minNameLength).max(maxNameLength).required(),
   email: Joi.string()
     .email({
-      minDomainSegments: validationConfig.minDomainSegments,
+      minDomainSegments: minDomainSegments,
     })
     .required(),
-  password: Joi.string()
-    .trim()
-    .min(validationConfig.minPasswordLength)
-    .required(),
+  password: Joi.string().trim().min(minPasswordLength).required(),
 });
 
 const schemaLoginUser = Joi.object({

@@ -24,11 +24,11 @@ const apiAuthService = new AuthService({
 });
 
 describe('AuthService:', () => {
-  describe('signUp method', () => {
+  describe('signup method', () => {
     test('should return new user when successfully registered', async () => {
       Users.addNewUser = jest.fn(() => savedUser);
 
-      const result = await apiAuthService.signUp(candidate);
+      const result = await apiAuthService.signup(candidate);
 
       expect(result).toHaveProperty('id');
       expect(result).not.toHaveProperty('password');
@@ -37,7 +37,7 @@ describe('AuthService:', () => {
     test('should throw error if user already exists', async () => {
       Users.getOneUserBy = jest.fn(() => savedUser);
 
-      await expect(() => apiAuthService.signUp(candidate)).rejects.toThrow();
+      await expect(() => apiAuthService.signup(candidate)).rejects.toThrow();
     });
   });
 
@@ -48,7 +48,7 @@ describe('AuthService:', () => {
 
     test('should return current user when successfully logged in', async () => {
       Users.getOneUserBy = jest.fn(() => savedUser);
-      bcryptPasswordService.comparePassword = jest.fn(() => true);
+      bcryptPasswordService.compare = jest.fn(() => true);
 
       const result = await apiAuthService.login(candidate);
 
@@ -57,14 +57,14 @@ describe('AuthService:', () => {
 
     test('should throw error if email is incorrect', async () => {
       Users.getOneUserBy = jest.fn(() => {});
-      bcryptPasswordService.comparePassword = jest.fn(() => true);
+      bcryptPasswordService.compare = jest.fn(() => true);
 
       await expect(() => apiAuthService.login(candidate)).rejects.toThrow();
     });
 
     test('should throw error if password is incorrect', async () => {
       Users.getOneUserBy = jest.fn(() => savedUser);
-      bcryptPasswordService.comparePassword = jest.fn(() => false);
+      bcryptPasswordService.compare = jest.fn(() => false);
 
       await expect(() => apiAuthService.login(candidate)).rejects.toThrow();
     });

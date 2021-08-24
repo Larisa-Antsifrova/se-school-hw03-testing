@@ -8,23 +8,21 @@ jest.mock('bcryptjs');
 const bcryptPasswordService = new PasswordService(bcrypt);
 
 describe('PasswordService:', () => {
-  describe('hashPassword method ', () => {
+  describe('hash method ', () => {
     test('should return hashed password', async () => {
       bcrypt.hash = jest.fn(() => hashedPassword);
 
-      const result = await bcryptPasswordService.hashPassword(
-        submittedPassword,
-      );
+      const result = await bcryptPasswordService.hash(submittedPassword);
 
       expect(result).toBe(hashedPassword);
     });
   });
 
-  describe('comparePassword method', () => {
+  describe('compare method', () => {
     test('should return true if passwords match', async () => {
       bcrypt.compare = jest.fn(() => true);
 
-      const result = await bcryptPasswordService.comparePassword(
+      const result = await bcryptPasswordService.compare(
         submittedPassword,
         hashedPassword,
       );
@@ -35,7 +33,7 @@ describe('PasswordService:', () => {
     test('should return false if passwords do not match', async () => {
       bcrypt.compare = jest.fn(() => false);
 
-      const result = await bcryptPasswordService.comparePassword(
+      const result = await bcryptPasswordService.compare(
         submittedPassword,
         hashedPassword,
       );
