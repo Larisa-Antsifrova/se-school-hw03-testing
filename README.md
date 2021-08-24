@@ -96,6 +96,8 @@ These tests can be run with the command:
       npm run test:postman
 ```
 
+The script will run API tests, print feedback in console, and create _newman_ folder with fancy report in html format. Each test run generates new report.
+
 Disclamer:
 
 - These tests cover very basic scenarios for the example's sake.
