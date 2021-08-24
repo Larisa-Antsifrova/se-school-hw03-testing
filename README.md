@@ -54,9 +54,44 @@ Hi!
       npm run start:dev
 ```
 
-## Setting up the app locally
+## Testing
 
-Testing and structure
+#### Unit and Integration tests
+
+For the sake of this homework, all tests are located in _tests_ folder. The structure inside the folder generally follows the app's structure.  
+&nbsp;  
+Once the app is set up, the following command runs the tests:
+
+```
+      npm test
+```
+
+The script will run the tests, print feedback in colsole, and generate index.html coverage report that can be found in automatically created _coverage_ folder.
+
+[VSCode-jest extension](https://github.com/jest-community/vscode-jest) was used to run tests on typing and get immediate feedback.  
+If IDE extention is not an option, then the following flags can be added to **test script** in package.json:
+
+```
+      --watch #runs tests related to changed files
+      --watchAll #runs all tests
+```
+
+What claims to be Integration tests is located in _tests > app_ folder. There, only external BTC rate service is mocked as a mutable out-of-process unmanaged collaborator.
+
+#### Postman API tests
+
+Out of curiousity, some API testing in [Postman](https://www.postman.com/) was explored. The exported Postman collection is placed in _tests-postman_ folder.  
+These tests can be run with the command:
+
+```
+      npm run test:postman
+```
+
+Disclamer:
+
+- These tests cover very basic scenarios for the example's sake.
+- They test app as it is and trigger prod/dev database as well as send additional http requests.
+- These tests are super fragile. Sometimes, they seem to consider even background music as well (observation: they definitely did not like Nirvana, but work more or less fine with 21 Guns by Greed Day).
 
 ## Endpoints
 
@@ -271,11 +306,13 @@ ResponseBody: {
 - [helmet](https://www.npmjs.com/package/helmet) - for securing the Web API.
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) - for setting rate limits on requests to the Web API.
 - [Joi](https://joi.dev/api/) - for validating data provided in POST requests.
+  &nbsp;
 - [Jest](https://jestjs.io/) - for testing: primary framework.
 - [supertest](https://www.npmjs.com/package/supertest) - for integration testing.
 - [Postman](https://www.postman.com/) - for automated endpoints testing.
 - [newman](https://www.npmjs.com/package/newman) - for launching authomated tests in cli.
 - [newman-reporter-htmlextra](https://www.npmjs.com/package/newman-reporter-htmlextra) - for generating automated tests report.
+- [IDE Jest extention](https://github.com/jest-community/vscode-jest) - for tracking running tests while typing.
 
 ## Resources
 
