@@ -1,6 +1,58 @@
 ![Banner](./tools-banner.png)
 
-# Web API - Software Engineering School
+# SE School - HW03 - Testing
+
+This REST API web server app provides basic features:
+
+- registering new users
+- logging existing users in
+- showing current BTC to UAH rate to authorized users
+
+The homework's goal is:
+
+- to write unit and integration tests
+
+**The projects's motto:**
+
+_Юнит-тест проверяет правильность работы одной единицы поведения. (с) В.Х._
+
+## Note to code reviewer
+
+Hi!
+
+## Setting up the app locally
+
+1. Clone the repository:
+
+```
+      git clone https://github.com/Larisa-Antsifrova/se-school-hw03-testing.git
+```
+
+2. Go to the cloned project folder:
+
+```
+      cd se-school-hw03-testing
+```
+
+3. Create .env file. Declare env variables for JWT and rates provider:
+
+```
+      JWT_SECRET_KEY={custom secret key for JWT sign: any string}
+
+      COINLAYER_API_KEY={api key for coinlayer rates api}
+```
+
+4. Install dependencies:
+
+```
+      npm i
+```
+
+5. Start the app in development mode:
+
+```
+      npm run start:dev
+```
 
 ## Endpoints
 
