@@ -8,6 +8,8 @@ This REST API web server app provides basic features:
 - logging existing users in
 - showing current BTC to UAH rate to authorized users
 
+The db files are commited for example purposes.
+
 The homework's goal is:
 
 - to write unit and integration tests
