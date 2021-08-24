@@ -13,7 +13,7 @@ const isAuthenticated = (req, res, next) => {
       });
     }
 
-    jwtTokenService.verifyToken(token);
+    jwtTokenService.verify(token);
 
     next();
   } catch (error) {

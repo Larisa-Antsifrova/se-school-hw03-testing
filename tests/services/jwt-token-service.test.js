@@ -25,11 +25,11 @@ describe('TokenService:', () => {
     });
   });
 
-  describe('verifyToken method', () => {
+  describe('verify method', () => {
     test('should return payload if verification succeeded', () => {
       jwt.verify = jest.fn(() => payload);
 
-      const result = jwtTokenService.verifyToken(tokenExample);
+      const result = jwtTokenService.verify(tokenExample);
 
       expect(result).toMatchObject(payload);
     });
@@ -39,7 +39,7 @@ describe('TokenService:', () => {
         throw Error();
       });
 
-      expect(() => jwtTokenService.verifyToken(tokenExample)).toThrow();
+      expect(() => jwtTokenService.verify(tokenExample)).toThrow();
     });
   });
 });
