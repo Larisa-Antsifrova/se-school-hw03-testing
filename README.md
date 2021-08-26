@@ -26,10 +26,15 @@ Thank you for the homework task. That was a great opportunity to learn more abou
 The ReadMe is long, but relevant sections are:
 
 - [Testing](#testing)
+- [Architecture](#architecture-task)
 - [Structure](#structure)
 
 I will be glad to hear any feedback and suggestions.  
 Happy reviewing :)
+
+## Architecture task
+
+Work in progress ...
 
 ## Setting up the app locally
 
