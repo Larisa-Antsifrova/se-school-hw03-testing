@@ -1,6 +1,6 @@
 ![Banner](./tools-banner.png)
 
-# SE School - HW03 - Testing
+# SE School - HW03/04 - Testing/Architecture
 
 This REST API web server app provides basic features:
 
@@ -13,6 +13,7 @@ The db files are commited for example purposes.
 The homework's goal is:
 
 - to write unit and integration tests
+- to draw application's desired architecture
 
 The homework's motto:
 
@@ -26,10 +27,17 @@ Thank you for the homework task. That was a great opportunity to learn more abou
 The ReadMe is long, but relevant sections are:
 
 - [Testing](#testing)
+- [Architecture](#architecture-task)
 - [Structure](#structure)
 
 I will be glad to hear any feedback and suggestions.  
 Happy reviewing :)
+
+## Architecture task
+
+The Ports&Adapters Architecture variant was chosen for the task:
+
+![Arch](./docs/web-btc-api-arch.jpg)
 
 ## Setting up the app locally
 
@@ -296,6 +304,7 @@ ResponseBody: {
 | configs         | Configurations of specific service classes and api characteristics | validation-config, repository-config, services-config |
 | controllers     | Endpoints' handlers                                                | home-controllers, user-controllers                    |
 | db              | Two file system databases: for testing and for development         | test-db                                               |
+| docs            | Application's desired architecture diagram                         | web-btc-api-arch                                      |
 | exceptions      | Class to generate custom api errors                                | api-errors                                            |
 | fs_odm          | Layer to word directly with file system                            | fs-db-mapper                                          |
 | helpers         | Project's constants                                                | HTTP codes, Messages                                  |
@@ -325,6 +334,7 @@ ResponseBody: {
 - [newman](https://www.npmjs.com/package/newman) - for launching authomated tests in cli.
 - [newman-reporter-htmlextra](https://www.npmjs.com/package/newman-reporter-htmlextra) - for generating automated tests report.
 - [IDE Jest extention](https://github.com/jest-community/vscode-jest) - for tracking running tests while typing.
+- [diagrams.net](https://app.diagrams.net/) - for diagrams drawing attempts.
 
 ## Resources
 
@@ -341,3 +351,11 @@ Testing:
 - [Effective Unit Testing Webinar by V.Khorikov's](https://www.youtube.com/watch?v=AAD9se2LjuI)
 - [Testing Strategies in a Microservice Architecture by Toby Clemson ](https://martinfowler.com/articles/microservice-testing/)
 - Clean Code by Robert C. Martin. Chapter 9.
+
+Architectures:
+
+- [Hexagonal Architecture by Erwan Alliaume, Sébastien Roccaserra](https://blog.octo.com/en/hexagonal-architecture-three-principles-and-an-implementation-example/)
+- [Alistair in the "Hexagone" - Alistair COCKBURN & Thomas PIERRAIN](https://www.youtube.com/playlist?list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL)
+- [The Pattern: Ports and Adapters](https://archive.is/5j2NI#selection-769.0-769.31)
+- [Ports & Adapters Architecture](https://herbertograca.com/2017/09/14/ports-adapters-architecture/)
+- Clean Code by Robert C. Martin. Chapter 10-11.
