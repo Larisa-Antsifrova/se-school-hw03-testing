@@ -35,7 +35,7 @@ Happy reviewing :)
 
 ## Architecture task
 
-The Ports&Adapters Architecture variant was chosed for the task:
+The Ports&Adapters Architecture variant was chosen for the task:
 
 ![Arch](./docs/web-btc-api-arch.jpg)
 
