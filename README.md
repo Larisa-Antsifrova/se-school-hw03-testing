@@ -1,6 +1,6 @@
 ![Banner](./tools-banner.png)
 
-# SE School - HW03 - Testing
+# SE School - HW03/04 - Testing/Architecture
 
 This REST API web server app provides basic features:
 
@@ -13,6 +13,7 @@ The db files are commited for example purposes.
 The homework's goal is:
 
 - to write unit and integration tests
+- to draw application's desired architecture
 
 The homework's motto:
 
@@ -34,7 +35,9 @@ Happy reviewing :)
 
 ## Architecture task
 
-Work in progress ...
+The Ports&Adapters Architecture variant was chosed for the task:
+
+![Arch](./docs/we-btc-api-arch.jpg)
 
 ## Setting up the app locally
 
@@ -330,6 +333,7 @@ ResponseBody: {
 - [newman](https://www.npmjs.com/package/newman) - for launching authomated tests in cli.
 - [newman-reporter-htmlextra](https://www.npmjs.com/package/newman-reporter-htmlextra) - for generating automated tests report.
 - [IDE Jest extention](https://github.com/jest-community/vscode-jest) - for tracking running tests while typing.
+- [diagrams.net](https://app.diagrams.net/) - for diagrams drawing attempts.
 
 ## Resources
 
@@ -344,3 +348,11 @@ Testing:
 - [Postman Docs](https://learning.postman.com/docs/writing-scripts/test-scripts/)
 - [newman Docs](https://github.com/postmanlabs/newman)
 - [V.Khorikov's Webinar](https://www.youtube.com/watch?v=AAD9se2LjuI)
+
+Architectures:
+
+- [Hexagonal Architecture by Erwan Alliaume, Sébastien Roccaserra](https://blog.octo.com/en/hexagonal-architecture-three-principles-and-an-implementation-example/)
+- [Alistair in the "Hexagone" - Alistair COCKBURN & Thomas PIERRAIN](https://www.youtube.com/playlist?list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL)
+- [The Pattern: Ports and Adapters](https://archive.is/5j2NI#selection-769.0-769.31)
+- [Ports & Adapters Architecture](https://herbertograca.com/2017/09/14/ports-adapters-architecture/)
+- Clean Code by Robert C. Martin. Chapter 10-11.
