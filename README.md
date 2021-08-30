@@ -348,7 +348,9 @@ Testing:
 - [supertest Docs](https://github.com/visionmedia/supertest)
 - [Postman Docs](https://learning.postman.com/docs/writing-scripts/test-scripts/)
 - [newman Docs](https://github.com/postmanlabs/newman)
-- [V.Khorikov's Webinar](https://www.youtube.com/watch?v=AAD9se2LjuI)
+- [Effective Unit Testing Webinar by V.Khorikov's](https://www.youtube.com/watch?v=AAD9se2LjuI)
+- [Testing Strategies in a Microservice Architecture by Toby Clemson ](https://martinfowler.com/articles/microservice-testing/)
+- Clean Code by Robert C. Martin. Chapter 9.
 
 Architectures:
 
