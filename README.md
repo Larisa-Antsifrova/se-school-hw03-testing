@@ -37,7 +37,7 @@ Happy reviewing :)
 
 The Ports&Adapters Architecture variant was chosed for the task:
 
-![Arch](./docs/we-btc-api-arch.jpg)
+![Arch](./docs/web-btc-api-arch.jpg)
 
 ## Setting up the app locally
 
@@ -304,6 +304,7 @@ ResponseBody: {
 | configs         | Configurations of specific service classes and api characteristics | validation-config, repository-config, services-config |
 | controllers     | Endpoints' handlers                                                | home-controllers, user-controllers                    |
 | db              | Two file system databases: for testing and for development         | test-db                                               |
+| docs            | Application's desired architecture diagram                         | web-btc-api-arch                                      |
 | exceptions      | Class to generate custom api errors                                | api-errors                                            |
 | fs_odm          | Layer to word directly with file system                            | fs-db-mapper                                          |
 | helpers         | Project's constants                                                | HTTP codes, Messages                                  |
